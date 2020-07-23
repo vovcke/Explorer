@@ -74,6 +74,7 @@ namespace WpfExplorer.Models
             }
 
             _items.Clear();
+            State = ExplorerState.Browsing;
 
             var dir = new DirectoryInfo(path);
             DirectoryInfo[] dirs = dir.GetDirectories();

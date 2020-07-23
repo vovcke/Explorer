@@ -8,7 +8,7 @@
     xmlns:util="clr-namespace:WpfExplorer.Controls.Util"
     mc:Ignorable="d"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    Title="MainWindow" Height="450" Width="700"
+    Title="Explorer" Height="450" Width="700"
     UseLayoutRounding="True">
     
     <Grid>

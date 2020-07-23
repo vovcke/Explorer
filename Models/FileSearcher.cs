@@ -40,7 +40,7 @@ namespace WpfBrowser.FileSearch
         void ThreadStart()
         {
             // State becomes null only after ExitState do his finalizing job
-            while(State != null && !Context.Exit)
+            while(State != null)
             {
                 State = State.Work();
             }
