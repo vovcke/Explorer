@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using WpfBrowser.FileSearch;
 
 namespace WpfExplorer.Models
@@ -27,6 +28,7 @@ namespace WpfExplorer.Models
             }
         }
         FileSearcher Searcher;
+        IconLoader _iconLoader;
         public string CurrentDirectory { get; private set; }
         public ExplorerState State { get; private set; }
 
@@ -48,7 +50,8 @@ namespace WpfExplorer.Models
         {
             CurrentDirectory = "";
             Searcher = new FileSearcher();
-            
+            _iconLoader = new IconLoader();
+
             Searcher.SearcherEvent += SearchCallback;
             Searcher.SearchFinishedEvent += SearchFinished;
 
@@ -77,24 +80,19 @@ namespace WpfExplorer.Models
 
             foreach (var val in dirs)
             {
-                _items.Add(new DirectoryItem()
-                {
-                    Name = val.Name,
-                    Size = "",
-                    Type = "Directory",
-                    LastModify = ""
-                });
+                _items.Add(new DirectoryItem(val.Name, val.FullName, "", "Directory", ""));
             }
             FileInfo[] files = dir.GetFiles();
             foreach (var val in files)
             {
-                _items.Add(new DirectoryItem()
-                {
-                    Name = val.Name,
-                    Size = val.Length.ToString(),
-                    Type = val.Extension.ToString(),
-                    LastModify = val.LastWriteTime.ToString()
-                });
+                _items.Add(
+                    new DirectoryItem(
+                        val.Name,
+                        val.FullName,
+                        val.Length.ToString(),
+                        val.Extension.ToString(),
+                        val.LastWriteTime.ToString()));
+                
             }
             CurrentDirectory = path;
             OnPropertyChanged("Items");
@@ -113,7 +111,7 @@ namespace WpfExplorer.Models
             }
         }
 
-        void SearchCallback(string val)
+        void SearchCallback(string file)
         {
             if (State != ExplorerState.Searching)
             {
@@ -121,26 +119,22 @@ namespace WpfExplorer.Models
             }
             Application.Current.Dispatcher.Invoke(delegate
             {
-                if (File.Exists(val))
+                if (File.Exists(file))
                 {
-                    FileInfo file = new FileInfo(val);
-                    Items.Add(new DirectoryItem()
-                    {
-                        Name = val,
-                        Size = file.Length.ToString(),
-                        Type = file.Extension.ToString(),
-                        LastModify = file.LastWriteTime.ToString()
-                    });
+                    FileInfo val = new FileInfo(file);
+                    Items.Add(
+                        new DirectoryItem(
+                            val.Name,
+                            val.FullName,
+                            val.Length.ToString(),
+                            val.Extension.ToString(),
+                            val.LastWriteTime.ToString()));
                 }
-                else if (Directory.Exists(val))
+                else if (Directory.Exists(file))
                 {
-                    Items.Add(new DirectoryItem()
-                    {
-                        Name = val,
-                        Size = "",
-                        Type = "Directory",
-                        LastModify = ""
-                    });
+                    DirectoryInfo info = new DirectoryInfo(file);
+                    Items.Add(new DirectoryItem(info.Name, info.FullName, "", "Directory", ""));
+                    
                 }
             });
         }

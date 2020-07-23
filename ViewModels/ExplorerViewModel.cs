@@ -32,7 +32,7 @@ namespace WpfExplorer.ViewModels
             string fullName = CheckPath(path);
             if (fullName.Length == 0)
             {
-                if(TryOpenFile(path))
+                if(!TryOpenFile(path))
                 {
                     MessageBox.Show("Invalid path.");
                 }

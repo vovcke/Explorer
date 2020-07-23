@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -60,6 +61,7 @@
     </ApplicationDefinition>
     <Compile Include="Attached.cs" />
     <Compile Include="Command.cs" />
+    <Compile Include="IconLoader.cs" />
     <Compile Include="Models\DirectoryItem.cs" />
     <Compile Include="Models\FileSearcher.cs" />
     <Compile Include="Models\SearcherState.cs" />

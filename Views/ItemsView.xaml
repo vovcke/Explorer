@@ -29,12 +29,14 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel Orientation="Vertical">
-                        <StackPanel Background="LightGray" Orientation="Vertical">
+                        <StackPanel Orientation="Vertical" Width="60" Height="70">
+                            <Image 
+                                Source="{Binding Path=Icon}" Width="35" Height="35"
+                                Margin="1" VerticalAlignment="Top" HorizontalAlignment="Center">
+                            </Image>
                             <TextBlock 
-                                Margin="5" Text="{Binding Path=Name}" 
-                                FontSize="12" Width="60" TextWrapping="Wrap" Height="60"/>
-                            <TextBlock 
-                                Margin="5" FontSize="8" Text="{Binding Path=Type}" 
+                                Margin="1" Text="{Binding Path=DisplayName}" FontSize="10"
+                                TextWrapping="Wrap" 
                                 VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </WrapPanel>
