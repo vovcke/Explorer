@@ -11,24 +11,27 @@ namespace WpfBrowser.FileSearch
         #region Members
         SearcherStateContext Context;
         SearcherState State;
+
+        public event SearcherCallback SearcherEvent;
+        public event SearcherCallback SearchFinishedEvent;
         #endregion
 
         public FileSearcher()
         {
             Context = new SearcherStateContext();
             Context.SearcherThread = new Thread(ThreadStart);
-
+            
             Context.SearcherThread.IsBackground = true;
             Context.SearcherThread.Start();
 
             State = new IdleState(Context);
         }
 
-        public void Search(string path, string fileName, SearcherCallback callback, SearcherCallback finishCallback)
+        public void Search(string path, string fileName)
         {
             lock(Context.Locker)
             {
-                Context.Set(path, fileName, callback, finishCallback);
+                Context.Set(path, fileName, SearcherEvent, SearchFinishedEvent);
                 Context.StartSearch = true;
                 Context.SearchEvent.Set();
             }

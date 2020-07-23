@@ -26,7 +26,7 @@ namespace WpfExplorer.Models
                 OnPropertyChanged("Items");
             }
         }
-        FileSearcher searcher;
+        FileSearcher Searcher;
         public string CurrentDirectory { get; private set; }
         public ExplorerState State { get; private set; }
 
@@ -47,7 +47,11 @@ namespace WpfExplorer.Models
         public BrowserModel()
         {
             CurrentDirectory = "";
-            searcher = new FileSearcher();
+            Searcher = new FileSearcher();
+            
+            Searcher.SearcherEvent += SearchCallback;
+            Searcher.SearchFinishedEvent += SearchFinished;
+
             _items = new ObservableCollection<DirectoryItem>();
             State = ExplorerState.Browsing;
         }
@@ -102,7 +106,7 @@ namespace WpfExplorer.Models
         {
             State = ExplorerState.Searching;
             Items.Clear();
-            searcher.Search(path, fileName, SearchCallback, SearchFinished);
+            Searcher.Search(path, fileName);
             if (StateChangedEvent != null)
             {
                 StateChangedEvent.Invoke(State);
@@ -153,7 +157,7 @@ namespace WpfExplorer.Models
 
         public void StopSearch()
         {
-            searcher.StopSearch();
+            Searcher.StopSearch();
             State = ExplorerState.SearchFinished;
             if (StateChangedEvent != null)
             {
