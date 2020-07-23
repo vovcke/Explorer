@@ -1,0 +1,33 @@
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:util="clr-namespace:WpfExplorer.Controls.Util">
+
+    <!-- Button -->
+    <Style
+        x:Key="ImageButton"
+        TargetType="{x:Type Button}">
+        <Setter
+            Property="HorizontalContentAlignment"
+            Value="Stretch" />
+        <Setter
+            Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid>
+                        <Image
+                            Source="{Binding Path=(util:ButtonImage.Image),
+                            RelativeSource={RelativeSource FindAncestor,
+                            AncestorType={x:Type Button}}}"
+                            HorizontalAlignment="Left"/>
+                        <TextBlock
+                            Text="{TemplateBinding Content}"
+                            HorizontalAlignment="Center" />
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+</ResourceDictionary>
