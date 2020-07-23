@@ -4,7 +4,7 @@
     xmlns:local="clr-namespace:WpfBrowser.Styles">
 
     <Style TargetType="{x:Type TextBox}">
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

@@ -31,7 +31,7 @@
                     <WrapPanel Orientation="Vertical">
                         <StackPanel Orientation="Vertical" Width="60" Height="70">
                             <Image 
-                                Source="{Binding Path=Icon}" Width="35" Height="35"
+                                Source="{Binding Path=Icon}" Width="40" Height="40"
                                 Margin="1" VerticalAlignment="Top" HorizontalAlignment="Center">
                             </Image>
                             <TextBlock 

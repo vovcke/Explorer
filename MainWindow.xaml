@@ -8,23 +8,23 @@
     xmlns:util="clr-namespace:WpfExplorer.Controls.Util"
     mc:Ignorable="d"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    Title="MainWindow" Height="450" Width="800"
+    Title="MainWindow" Height="450" Width="700"
     UseLayoutRounding="True">
     
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="220"></ColumnDefinition>
-            <ColumnDefinition Width="120"></ColumnDefinition>
+            <ColumnDefinition Width="80"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="5"></RowDefinition>
         </Grid.RowDefinitions>
 
         <TextBox 
-            Margin="5" Name="dirPathTbx" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch"
+            Margin="3" Name="dirPathTbx" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch"
             VerticalContentAlignment="Center"
             Text="{Binding PathTextBox}">
             <TextBox.InputBindings>
@@ -35,10 +35,10 @@
             </TextBox.InputBindings>
         </TextBox>
         <StackPanel
-            Margin="5" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Orientation="Horizontal">
+            Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,7,0">
             <Button
                 x:Name="upBtn"
-                Margin="5"
+                Margin="5,10,5,10"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 util:ButtonImage.Image="Resources/Images/up.png"
@@ -46,7 +46,7 @@
                 Command="{Binding NavigateUpCommand}"/>
             <Button
                 x:Name="goBtn"
-                Margin="5"
+                Margin="5,10,5,10"
                 util:ButtonImage.Image="Resources/Images/go.png"
                 Style="{DynamicResource ImageButton}"
                 HorizontalContentAlignment="Center"
@@ -55,7 +55,7 @@
         </StackPanel>
 
         <TextBox 
-            Margin="5" Name="searchPathTbx" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"
+            Margin="3" Name="searchPathTbx" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"
             VerticalContentAlignment="Center"
             Text="{Binding SearchTextBox}">
             <TextBox.InputBindings>
@@ -67,12 +67,13 @@
         </TextBox>
         <Button
             x:Name="searchBtn"
+            Margin="10"
             Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" 
             util:ButtonImage.Image="Resources/Images/search.png"
             Style="{DynamicResource ImageButton}"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Margin="10"
+            
             Command="{Binding SearchCommand}"
             Visibility="{Binding IsBrowsing}"/>
         <Button
@@ -86,16 +87,13 @@
             Visibility="{Binding IsSearching}"/>
 
         <ComboBox 
-            Grid.Column="2" Name="viewMode" ItemsSource="{Binding ViewModelNames}" SelectedItem="{Binding CurrentViewModelName}"
-            Margin="5" SelectedIndex="0" VerticalContentAlignment="Center">
+            Grid.Column="2" Name="viewMode" FontSize="14"
+            ItemsSource="{Binding ViewModelNames}" SelectedItem="{Binding CurrentViewModelName}"
+            Margin="3" SelectedIndex="0" VerticalContentAlignment="Center">
         </ComboBox>
 
         <ContentControl 
             Content="{Binding CurrentViewModel}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
         </ContentControl>
-
-        <Image x:Name="img"
-            Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
-        </Image>
     </Grid>
 </Window>
