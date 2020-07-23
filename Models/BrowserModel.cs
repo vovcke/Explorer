@@ -73,11 +73,11 @@ namespace WpfExplorer.Models
                 return true;
             }
 
-            _items.Clear();
-            State = ExplorerState.Browsing;
-
             var dir = new DirectoryInfo(path);
             DirectoryInfo[] dirs = dir.GetDirectories();
+
+            _items.Clear();
+            State = ExplorerState.Browsing;
 
             foreach (var val in dirs)
             {

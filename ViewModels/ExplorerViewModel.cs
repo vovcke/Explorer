@@ -45,8 +45,15 @@ namespace WpfExplorer.ViewModels
 
         private void DoNavigate(string path)
         {
-            Browser.Browse(path);
-            OnPropertyChanged("CurrentDirectory");
+            try
+            {
+                Browser.Browse(path);
+                OnPropertyChanged("CurrentDirectory");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private string CheckPath(string path)
@@ -100,7 +107,14 @@ namespace WpfExplorer.ViewModels
 
         public void Search(string path, string text)
         {
-            Browser.Search(path, text);
+            try
+            {
+                Browser.Search(path, text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public void StopSearch()
