@@ -32,6 +32,7 @@ namespace WpfBrowser.Models.FileSearch
         public bool StopSearch = false;
         public bool Exit = false;
         public AutoResetEvent SearchEvent = new AutoResetEvent(false);
+        public string CurrentSearchDirectory;
 
         public Thread SearcherThread;
         #endregion

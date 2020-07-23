@@ -75,6 +75,20 @@ namespace WpfExplorer.ViewModels
                 OnPropertyChanged("SearchTextBox");
             }
         }
+
+        private string _statusTextBox = "";
+        public string StatusTextBox
+        {
+            get
+            {
+                return _statusTextBox;
+            }
+            set
+            {
+                _statusTextBox = value;
+                OnPropertyChanged("StatusTextBox");
+            }
+        }
         public Visibility IsSearching
         {
             get
@@ -197,10 +211,17 @@ namespace WpfExplorer.ViewModels
                 elem.PropertyChanged += ModelPropertyChanged;
             }
             Browser.StateChangedEvent += Browser_StateChangedEvent;
+            Browser.SearcherProgressEvent += Browser_SearcherProgressEvent;
+        }
+
+        private void Browser_SearcherProgressEvent(string filename)
+        {
+            StatusTextBox = filename;
         }
 
         private void Browser_StateChangedEvent(BrowserModel.ExplorerState state)
         {
+            StatusTextBox = "";
             OnPropertyChanged("IsSearching");
             OnPropertyChanged("IsBrowsing");
         }

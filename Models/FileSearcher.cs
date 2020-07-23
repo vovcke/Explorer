@@ -11,18 +11,25 @@ namespace WpfBrowser.FileSearch
         #region Members
         SearcherStateContext Context;
         SearcherState State;
+        System.Timers.Timer ProgressTimer;
 
         public event SearcherCallback SearcherEvent;
         public event SearcherCallback SearchFinishedEvent;
+        public event SearcherCallback SearchProgressEvent;
         #endregion
 
         public FileSearcher()
         {
             Context = new SearcherStateContext();
             Context.SearcherThread = new Thread(ThreadStart);
-            
+
+            ProgressTimer = new System.Timers.Timer(200);
+            ProgressTimer.Elapsed += OnProgress;
+
             Context.SearcherThread.IsBackground = true;
             Context.SearcherThread.Start();
+
+            SearchFinishedEvent += FileSearcher_SearchFinishedEvent;
 
             State = new IdleState(Context);
         }
@@ -34,6 +41,7 @@ namespace WpfBrowser.FileSearch
                 Context.Set(path, fileName, SearcherEvent, SearchFinishedEvent);
                 Context.StartSearch = true;
                 Context.SearchEvent.Set();
+                ProgressTimer.Start();
             }
         }
 
@@ -48,18 +56,33 @@ namespace WpfBrowser.FileSearch
 
         public void Exit()
         {
+            ProgressTimer.Stop();
             Context.Exit = true;
             Context.SearchEvent.Set();
         }
 
         public void StopSearch()
         {
-            if(Context.IsBusy)
+            if (Context.IsBusy)
             {
+                ProgressTimer.Stop();
                 Context.StopSearch = true;
                 Context.StartSearch = false;
                 Context.SearchEvent.Set();
             }
+        }
+
+        private void OnProgress(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (SearchProgressEvent != null)
+            {
+                SearchProgressEvent.Invoke(Context.CurrentSearchDirectory);
+            }
+        }
+
+        private void FileSearcher_SearchFinishedEvent(string filename)
+        {
+            ProgressTimer.Stop();
         }
     }
 }

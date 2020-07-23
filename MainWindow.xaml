@@ -20,7 +20,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="35"></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="15"></RowDefinition>
         </Grid.RowDefinitions>
 
         <TextBox 
@@ -95,5 +95,10 @@
         <ContentControl 
             Content="{Binding CurrentViewModel}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
         </ContentControl>
+
+        <TextBlock
+            Margin="3" VerticalAlignment="Center"
+            Text="{Binding StatusTextBox}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" FontSize="8">
+        </TextBlock>
     </Grid>
 </Window>

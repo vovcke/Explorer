@@ -4,6 +4,10 @@ using WpfBrowser.Models.FileSearch;
 
 namespace WpfBrowser.FileSearch
 {
+    public enum StateName
+    {
+        Busy, Idle, Exit
+    }
     abstract class SearcherState
     {
         protected SearcherStateContext Context;
@@ -12,6 +16,7 @@ namespace WpfBrowser.FileSearch
             Context = ctx;
         }
         public abstract SearcherState Work();
+        public abstract StateName GetName();
     }
 
     class IdleState : SearcherState
@@ -19,6 +24,8 @@ namespace WpfBrowser.FileSearch
         public IdleState(SearcherStateContext ctx) : base(ctx)
         {
         }
+
+        public override StateName GetName() { return StateName.Idle; }
 
         public override SearcherState Work()
         {
@@ -49,6 +56,7 @@ namespace WpfBrowser.FileSearch
         public BusyState(SearcherStateContext ctx) : base(ctx)
         {
         }
+        public override StateName GetName() { return StateName.Busy; }
 
         public override SearcherState Work()
         {
@@ -81,7 +89,10 @@ namespace WpfBrowser.FileSearch
 
                 lock (Context.Locker)
                 {
-                    Context.Params.FinishCallback.Invoke("Success.");
+                    if(Context.Params.FinishCallback != null)
+                    {
+                        Context.Params.FinishCallback.Invoke("Success.");
+                    }
                     // After search is done reset al the flags and data
                     Context.Reset();
                     Context.IsBusy = false;
@@ -113,6 +124,8 @@ namespace WpfBrowser.FileSearch
                 return false;
             try
             {
+                Context.CurrentSearchDirectory = info.FullName;
+
                 var dirs = info.EnumerateDirectories();
                 var files = info.EnumerateFiles();
 
@@ -149,6 +162,8 @@ namespace WpfBrowser.FileSearch
         public ExitState(SearcherStateContext ctx) : base(ctx)
         {
         }
+
+        public override StateName GetName() { return StateName.Exit; }
         public override SearcherState Work()
         {
             lock(Context.Locker)

@@ -51,13 +51,20 @@ namespace WpfExplorer
                 return _fileIcons[fileName];
             }
 
-            SHFILEINFO info = new SHFILEINFO();
-            IntPtr res = SHGetFileInfo(fileName, 0, ref info, (uint)Marshal.SizeOf(info), 0x101);
+            try
+            {
+                SHFILEINFO info = new SHFILEINFO();
+                IntPtr res = SHGetFileInfo(fileName, 0, ref info, (uint)Marshal.SizeOf(info), 0x101);
 
-            BitmapSource src = Imaging.CreateBitmapSourceFromHIcon(info.hIcon, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            _fileIcons[fileName] = src;
+                BitmapSource src = Imaging.CreateBitmapSourceFromHIcon(info.hIcon, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                _fileIcons[fileName] = src;
 
-            return src;
+                return src;
+            }
+            catch (Exception ex)
+            {
+            }
+            return null;
         }
 
     }
