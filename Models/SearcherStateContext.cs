@@ -22,6 +22,18 @@ namespace WpfBrowser.Models.FileSearch
         }
     }
 
+    class SearchResult
+    {
+        public DateTime StartTime;
+        public int Counter;
+
+        public SearchResult()
+        {
+            StartTime = DateTime.Now;
+            Counter = 0;
+        }
+    }
+
     class SearcherStateContext
     {
         #region Members
@@ -33,6 +45,7 @@ namespace WpfBrowser.Models.FileSearch
         public bool Exit = false;
         public AutoResetEvent SearchEvent = new AutoResetEvent(false);
         public string CurrentSearchDirectory;
+        public SearchResult Result;
 
         public Thread SearcherThread;
         #endregion

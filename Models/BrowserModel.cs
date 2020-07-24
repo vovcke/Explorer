@@ -35,6 +35,7 @@ namespace WpfExplorer.Models
         public delegate void StateChangedDelegate(ExplorerState state);
         public event StateChangedDelegate StateChangedEvent;
         public event SearcherCallback SearcherProgressEvent;
+        public event SearcherCallback SearcherFinishedEvent;
 
         #endregion
 
@@ -55,7 +56,7 @@ namespace WpfExplorer.Models
 
             Searcher.SearcherEvent += SearchCallback;
             Searcher.SearchFinishedEvent += SearchFinished;
-            Searcher.SearchProgressEvent += Searcher_SearchProgressEvent; ;
+            Searcher.SearchProgressEvent += Searcher_SearchProgressEvent;
 
             _items = new ObservableCollection<DirectoryItem>();
             State = ExplorerState.Browsing;
@@ -147,6 +148,10 @@ namespace WpfExplorer.Models
                     Items.Add(new DirectoryItem(info.Name, info.FullName, "", "Directory", ""));
                     
                 }
+                if (Items.Count > 1000)
+                {
+                    StopSearch();
+                }
             });
         }
 
@@ -156,6 +161,10 @@ namespace WpfExplorer.Models
             if (StateChangedEvent != null)
             {
                 StateChangedEvent.Invoke(State);
+            }
+            if (SearcherProgressEvent != null)
+            {
+                SearcherProgressEvent.Invoke(fileName);
             }
         }
 

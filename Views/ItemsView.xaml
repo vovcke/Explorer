@@ -20,6 +20,19 @@
                         CommandParameter="{Binding ElementName=itemsList, Path=SelectedItem}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
+
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="ToolTip">
+                        <Setter.Value>
+                            <UniformGrid Columns="1">
+                                <TextBlock Text="{Binding FullName}"/>
+                            </UniformGrid>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel x:Name="wrapPanel"/>

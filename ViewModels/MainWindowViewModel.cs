@@ -116,7 +116,6 @@ namespace WpfExplorer.ViewModels
             OnPropertyChanged("Items");
         }
         
-
         #region Commands
         private ICommand _navigateCommand;
         public ICommand NavigateCommand
@@ -125,6 +124,7 @@ namespace WpfExplorer.ViewModels
             {
                 return _navigateCommand ?? (_navigateCommand = new RelayCommand(x =>
                 {
+                    StatusTextBox = "";
                     CurrentViewModel.Navigate(PathTextBox);
                 }));
             }
@@ -137,6 +137,7 @@ namespace WpfExplorer.ViewModels
             {
                 return _navigateUpCommand ?? (_navigateUpCommand = new RelayCommand(x =>
                 {
+                    StatusTextBox = "";
                     PathTextBox = CurrentViewModel.NavigateUp();
                 }));
             }
@@ -173,6 +174,7 @@ namespace WpfExplorer.ViewModels
             {
                 return _pathTextBoxEnterCommand ?? (_pathTextBoxEnterCommand = new RelayCommand(x =>
                 {
+                    StatusTextBox = "";
                     string param = x as string;
                     CurrentViewModel.Navigate(param);
                 }));
@@ -192,6 +194,7 @@ namespace WpfExplorer.ViewModels
             }
         }
         #endregion
+
         public MainWindowViewModel()
         {
             ViewModels = new Dictionary<string, ExplorerViewModel>();
@@ -212,6 +215,11 @@ namespace WpfExplorer.ViewModels
             }
             Browser.StateChangedEvent += Browser_StateChangedEvent;
             Browser.SearcherProgressEvent += Browser_SearcherProgressEvent;
+            Browser.SearcherFinishedEvent += Browser_SearcherFinishedEvent; ;
+        }
+        private void Browser_SearcherFinishedEvent(string filename)
+        {
+            StatusTextBox = filename;
         }
 
         private void Browser_SearcherProgressEvent(string filename)
@@ -221,7 +229,6 @@ namespace WpfExplorer.ViewModels
 
         private void Browser_StateChangedEvent(BrowserModel.ExplorerState state)
         {
-            StatusTextBox = "";
             OnPropertyChanged("IsSearching");
             OnPropertyChanged("IsBrowsing");
         }

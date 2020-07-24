@@ -60,6 +60,7 @@ namespace WpfBrowser.FileSearch
 
         public override SearcherState Work()
         {
+            Context.Result = new SearchResult();
             while (!Context.StopSearch && !Context.Exit)
             {
                 SearchParams sparams = null;
@@ -84,9 +85,11 @@ namespace WpfBrowser.FileSearch
 
                 lock (Context.Locker)
                 {
-                    if(Context.Params.FinishCallback != null)
+                    if (Context.Params.FinishCallback != null)
                     {
-                        Context.Params.FinishCallback.Invoke("Success.");
+                        string time = (DateTime.Now - Context.Result.StartTime).Seconds.ToString();
+                        string result = string.Format("Search finished in {0} seconds, {1} results found.", time, Context.Result.Counter);
+                        Context.Params.FinishCallback.Invoke(result);
                     }
                     // After search is done reset al the flags and data
                     Context.Reset();
@@ -130,6 +133,7 @@ namespace WpfBrowser.FileSearch
                         return false;
                     if (dir.Name.Contains(Context.Params.Name))
                     {
+                        Context.Result.Counter++;
                         Context.Params.Callback.Invoke(dir.FullName.ToString());
                     }
                     if (DoSearch(dir) == false)
@@ -143,6 +147,7 @@ namespace WpfBrowser.FileSearch
                         return false;
                     if (file.Name.Contains(Context.Params.Name))
                     {
+                        Context.Result.Counter++;
                         Context.Params.Callback.Invoke(file.FullName.ToString());
                     }
                 }
