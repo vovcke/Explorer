@@ -18,7 +18,7 @@ namespace WpfExplorer.ViewModels
                     DirectoryItem item = x as DirectoryItem;
                     if (item != null)
                     {
-                        Navigate(item.Name);
+                        Navigate(item.FullName);
                     }
                 }));
             }

@@ -62,11 +62,6 @@ namespace WpfBrowser.FileSearch
         {
             while (!Context.StopSearch && !Context.Exit)
             {
-                if (Context.Exit)
-                {
-                    return new ExitState(Context);
-                }
-
                 SearchParams sparams = null;
                 lock (Context.Locker)
                 {

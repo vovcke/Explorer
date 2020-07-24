@@ -61,8 +61,11 @@ namespace WpfExplorer
 
                 return src;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+                // For some reason there are few files that cause an exception here
+                // Just forget about this error for now
+                // Why doing today what you can do tomorrow, right
             }
             return null;
         }
