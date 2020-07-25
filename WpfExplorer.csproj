@@ -61,7 +61,13 @@
     </ApplicationDefinition>
     <Compile Include="Attached.cs" />
     <Compile Include="Command.cs" />
+    <Compile Include="Logger\DebugWindow.xaml.cs">
+      <DependentUpon>DebugWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IconLoader.cs" />
+    <Compile Include="Logger\FileLogger.cs" />
+    <Compile Include="Logger\Logger.cs" />
+    <Compile Include="Logger\WindowLogger.cs" />
     <Compile Include="Models\DirectoryItem.cs" />
     <Compile Include="Models\FileSearcher.cs" />
     <Compile Include="Models\SearcherState.cs" />
@@ -78,6 +84,10 @@
     <Compile Include="Views\TableView.xaml.cs">
       <DependentUpon>TableView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Logger\DebugWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

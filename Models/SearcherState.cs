@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using WpfBrowser.Models.FileSearch;
+using WpfExplorer;
 
 namespace WpfBrowser.FileSearch
 {
@@ -60,6 +61,7 @@ namespace WpfBrowser.FileSearch
 
         public override SearcherState Work()
         {
+            Logger.Instance().Log("public override SearcherState Work()");
             Context.Result = new SearchResult();
             while (!Context.StopSearch && !Context.Exit)
             {

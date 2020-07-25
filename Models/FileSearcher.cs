@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using WpfBrowser.Models.FileSearch;
+using WpfExplorer;
 
 namespace WpfBrowser.FileSearch
 {
@@ -36,7 +37,9 @@ namespace WpfBrowser.FileSearch
 
         public void Search(string path, string fileName)
         {
-            lock(Context.Locker)
+            Logger.Instance().Log(
+                String.Format("public void Search({0}, {1})", path, fileName));
+            lock (Context.Locker)
             {
                 Context.Set(path, fileName, SearcherEvent, SearchFinishedEvent);
                 Context.StartSearch = true;
@@ -47,8 +50,9 @@ namespace WpfBrowser.FileSearch
 
         void ThreadStart()
         {
+            Logger.Instance().Log("void ThreadStart()");
             // State becomes null only after ExitState do his finalizing job
-            while(State != null)
+            while (State != null)
             {
                 State = State.Work();
             }

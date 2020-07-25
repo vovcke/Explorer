@@ -17,5 +17,10 @@ namespace WpfExplorer
         {
             InitializeComponent();
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Logger.Instance().Shutdown();
+        }
     }
 }
