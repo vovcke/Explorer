@@ -12,12 +12,7 @@ namespace WpfExplorer
         {
             if (_instance == null)
             {
-#if DEBUG
-                _instance = new WindowLogger();
-#else
                 _instance = new FileLogger();
-#endif
-
             }
             return _instance;
         }

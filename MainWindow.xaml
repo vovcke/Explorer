@@ -10,8 +10,9 @@
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     Title="Explorer" Height="450" Width="700"
     UseLayoutRounding="True"
-    Closing="Window_Closing">
-    
+    Closing="Window_Closing"
+
+    Icon="Resources/Images/Icon.png">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -19,6 +20,7 @@
             <ColumnDefinition Width="80"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+
             <RowDefinition Height="35"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="15"></RowDefinition>

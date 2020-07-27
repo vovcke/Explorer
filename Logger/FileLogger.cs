@@ -14,7 +14,7 @@ namespace WpfExplorer
         {
             try
             {
-                File.AppendAllText("log.txt", text);
+                File.AppendAllText(String.Format("{0} log.txt", DateTime.Now.ToString()), text);
             }
             catch (Exception)
             { }
